@@ -1,0 +1,26 @@
+{% extends './Layout.html' %}
+
+
+{% block content%}
+
+    
+    <div class="row initial-content">
+    {% for p in projects  %}
+
+        <div class="col-md-4">
+            <div class="card" >
+                <div class="card-body">
+                  <h4 class="card-title">{{ p.name}}</h4>
+                  <h6 class="card-subtitle mb-2 text-muted"> <small> User:</small> {{p.user.username}} </h6>
+                  <p class="card-text">{{ p.description }}</p>
+                  <a href="/project/id/{{ p.pk }}" class="card-link">Show Project</a>
+                  
+                </div>
+              </div>
+        </div>
+        
+        {% endfor %}
+    </div>
+
+
+{% endblock %}

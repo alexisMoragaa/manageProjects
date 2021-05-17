@@ -18,9 +18,31 @@
   <!-- CSS Files -->
   <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" />
   <link href="{% static 'css/paper-kit.css' %}" rel="stylesheet" />
+  <link href="{% static 'css/style.css' %}" rel="stylesheet">
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="{% static 'demo/demo.css'%}" rel="stylesheet" />
 </head>
+
+{% block scripts %}
+<script>
+
+      function allowDrop(ev) {
+        ev.preventDefault();
+      }
+      
+      function drag(ev) {
+        ev.dataTransfer.setData("text", ev.target.id);
+      }
+      
+      function drop(ev) {
+        ev.preventDefault();
+        var data = ev.dataTransfer.getData("text");
+        console.log(data)
+        ev.target.appendChild(document.getElementById(data));
+      }
+ 
+</script>
+{% endblock %}
 
 <body class="index-page">
   <!-- Navbar -->
@@ -38,31 +60,29 @@
       </div>
       <div class="collapse navbar-collapse" data-nav-image="{% static 'img/blurred-image-1.jpg' %}" data-color="orange">
         <ul class="navbar-nav ml-auto">
-          <li class="dropdown nav-item">
+          <!-- <li class="dropdown nav-item">
             <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
-              Link 1 </a>
+              Canvan </a>
             <div class="dropdown-menu dropdown-menu-right dropdown-danger">
-              <a href="javascript:;" class="dropdown-item">
-                Sub link 1
+              <a href="/projects" class="dropdown-item">
+                All Projects
               </a>
               <a href="javascript:;" class="dropdown-item">
-                Sub link 2
+                My Projects
               </a>
-              <a href="javascript:;" class="dropdown-item">
-                Sub link 3
-              </a>
+  
             </div>
-          </li>
+          </li> -->
           <li class="nav-item">
-            <a href="#" class="nav-link" id="navbarDropdownMenuLink1" data-toggle="dropdown">
-              Link 2
+            <a href="/projects" class="nav-link" id="navbarDropdownMenuLink1">
+              Projects
             </a>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="btn btn-round btn-danger" href="#" >
               <i class="nc-icon nc-cart-simple"></i> Link 3
             </a>
-          </li>
+          </li> -->
         </ul>
       </div>
     </div>
@@ -70,14 +90,14 @@
 
   <!-- End Navbar -->
 
-    <div class="wrapper" >
+ 
         <div class="container pt-5">
             {% block content %}
 
-            {% endblock%}
+            {% endblock %}
 
         </div>
-    </div>
+
 
 
   <footer class="footer footer-black">

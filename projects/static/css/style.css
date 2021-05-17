@@ -1,0 +1,18 @@
+.initial-content{
+    min-height: 82vh;
+    margin-top:4.3vh
+}
+.column{
+    min-height: 78vh!important;
+    padding:10px!important;
+    border-radius: 12px;
+    background-color: #fff!important;
+}
+
+.card-column{
+    cursor: pointer;
+}
+
+body{
+    background-color: #f3f3f3!important
+}
