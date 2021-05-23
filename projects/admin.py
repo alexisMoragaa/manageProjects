@@ -4,7 +4,7 @@ from django.contrib import admin
 
 
 #Moedels 
-from projects.models import Card, Column, Profile, Project
+from projects.models import Card, Column, Project # Profile,
 from django.contrib.auth.models import User
 
 
@@ -32,28 +32,28 @@ class CardAdmin(admin.ModelAdmin):
     search_fields = ('pk', 'title', 'column__name', 'column__project__name', 'user__user__username')
 
 
-@admin.register(Profile)
-class ProfileAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'user', 'number',  'picture', 'created_at', 'updated_at')
-    list_display_links = ('pk', 'user','number', 'created_at', 'updated_at')
-    search_fields = ('user__username', 'number')
+# @admin.register(Profile)
+# class ProfileAdmin(admin.ModelAdmin):
+#     list_display = ('pk', 'user', 'number',  'picture', 'created_at', 'updated_at')
+#     list_display_links = ('pk', 'user','number', 'created_at', 'updated_at')
+#     search_fields = ('user__username', 'number')
 
 
 
 
 
-class ProfileInline(admin.StackedInline):
-    """Config inline profile for show profile in admin user view"""
-    model = Profile
-    can_delete =  False
-    verbose_name_plural = 'Profiles'
+# class ProfileInline(admin.StackedInline):
+#     """Config inline profile for show profile in admin user view"""
+#     model = Profile
+#     can_delete =  False
+#     verbose_name_plural = 'Profiles'
 
 
-class UserAdnin(BaseUserAdmin):
-    inlines = (ProfileInline,)
+# class UserAdnin(BaseUserAdmin):
+#     inlines = (ProfileInline,)
 
 
-admin.site.unregister(User)
-"""Unregister model user, this model be unregister for register with the model profile using tupla userAdmin"""
-admin.site.register(User, UserAdnin)
-"""in this sentence register model user again using the tupla UserAdin to leave then together"""
+# admin.site.unregister(User)
+# """Unregister model user, this model be unregister for register with the model profile using tupla userAdmin"""
+# admin.site.register(User, UserAdnin)
+# """in this sentence register model user again using the tupla UserAdin to leave then together"""
