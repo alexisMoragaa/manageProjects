@@ -1,43 +1,37 @@
 {% extends './Layout.html' %}
 
-
+{% load static %}
 
 {% block content %}
+<script src="{% static 'js/dragAndDrop.js' %}"></script>
+
+
     <div class=" initial-content">
 
         <div class="row mb-2">
             <div class="col-md-12">
-
                 <h4>Project Name : {{project.name}}</h4>
             </div>
         </div>
 
        
         <div class="row">
-
-            {% for c in columns %}
+            
+            {% for c in column %}
                 <div class="col-md-4" >
-
+  
                     <h5>{{ c.name }}</h5>
 
-                    <div class=" column" id="column-{{c.pk}}"  ondrop="drop(event)" ondragover="allowDrop(event)">
+                    <div class="column" id="column-{{c.pk}}"  ondrop="drop(event)" ondragover="allowDrop(event)">
+                        <!-- """Column for show Tasks""" -->
 
-
+                            
                         <div class="card card-column mt-4 p-2" id="card-{{c.pk}}"  draggable="true" ondragstart="drag(event)">
                             <p>Tarea 1 - {{c.pk}}</p>
                             <p>Primera Tarea</p>
                         </div>
 
-                        <div class="card card-column mt-4 p-2">
-                            <p>Tarea 2</p>
-                            <p>Segunda Tarea</p>
-                        </div>
-
-                        <div class="card card-column mt-4 p-2">
-                            <p>Tarea 3</p>
-                            <p>Tercera Tarea</p>
-                        </div>
-
+                     
                     </div>
                 </div>
             {% endfor %}

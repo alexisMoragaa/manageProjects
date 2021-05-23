@@ -1,4 +1,4 @@
-from projects.models import Column, Project
+from projects.models import Column, Project, Card
 from django.shortcuts import render
 from django.http import HttpResponse
 
@@ -18,6 +18,19 @@ def projects(request):
 
 
 def project(request, id):
-    data = {'project' : Project.objects.get(pk = id), 'columns': Column.objects.filter(project = id)}
-    # return HttpResponse(data.project)
+
+    data = {'project' : Project.objects.get(pk = id), 'column': Column.objects.filter(project = id) }
+
     return render(request, 'Project.html', data)
+
+
+
+
+
+    """
+    {
+     1: {'id': 1, 'name': 'To Do', 'description': 'Tareas pendientes', 'cards': {<QuerySet [<Card: Primera Tarea>, <Card: Segunda Tarea>]>}}, 
+     2: {'id': 2, 'name': 'In Progress', 'description': 'Tareas En Progreso', 'cards': {<QuerySet []>}}, 
+     3: {'id': 3, 'name': 'Done', 'description': 'Tareas Finalzadas', 'cards': {<QuerySet []>}}
+    }
+    """
