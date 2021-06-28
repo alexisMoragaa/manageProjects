@@ -3,7 +3,54 @@
 {% load static %}
 
 {% block content %}
+<script src="{% static 'js/axios.js' %}"></script>
 <script src="{% static 'js/dragAndDrop.js' %}"></script>
+
+
+<script>
+
+
+
+    function getTasks(column, col, idColumn, idProject){
+
+        // Peticion Get para obtener las tareas de cada columna
+        axios.get(`/tasks/column/${idColumn}`)
+            .then(function(response){
+                addTasks(response, column, col)
+            })
+            .catch(function(error){
+                console.log(error)
+            })
+
+    }
+
+
+    function addTasks(response, column, col){
+       //Esta funcion despliega las tareas correspndientes a cada columna
+        var task = ''
+        response.data.map(function(x){
+
+            task += `
+                    <div class="card card-column mt-4 p-2" id="card-${x.pk}-${col}" draggable="true" ondragstart="drag(event)">
+                        <div class="card-body">
+                            <h5 class="card-title"> ${x.fields.title} </h5> 
+                            <p class="card-text"> ${x.fields.description} </p> 
+                            <span>${x.fields.user} </span>
+                            <span class="fr">${x.fields.created_at.substring(0,10)}</span>   
+                        </div>
+                    </div>
+                    `
+        })
+        
+       
+        document.getElementById(column).innerHTML = task 
+    }
+
+
+
+
+</script>
+
 
 
     <div class=" initial-content">
@@ -23,15 +70,9 @@
                     <h5>{{ c.name }}</h5>
 
                     <div class="column" id="column-{{c.pk}}"  ondrop="drop(event)" ondragover="allowDrop(event)">
-                        <!-- """Column for show Tasks""" -->
 
-                            
-                        <div class="card card-column mt-4 p-2" id="card-{{c.pk}}"  draggable="true" ondragstart="drag(event)">
-                            <p>Tarea 1 - {{c.pk}}</p>
-                            <p>Primera Tarea</p>
-                        </div>
+                       <script>getTasks('column-{{c.pk}}', '{{c.name}}', '{{c.id}}', '{{project.id}}')</script>
 
-                     
                     </div>
                 </div>
             {% endfor %}
@@ -39,6 +80,8 @@
         </div>
             
     </div>
+
+
 {% endblock %}
 
 

@@ -1,7 +1,7 @@
 from projects.models import Column, Project, Card
 from django.shortcuts import render
-from django.http import HttpResponse
-
+from django.http import HttpResponse, JsonResponse
+from django.core.serializers import serialize
 # Create your views here.
 def index(request):
     return HttpResponse('este es el index')
@@ -25,12 +25,9 @@ def project(request, id):
 
 
 
+def tasks(request, idColumn):
+    data  = Card.objects.filter(column = idColumn).only('id')
+    return HttpResponse(serialize('json', data), 'application/json')
+    
 
 
-    """
-    {
-     1: {'id': 1, 'name': 'To Do', 'description': 'Tareas pendientes', 'cards': {<QuerySet [<Card: Primera Tarea>, <Card: Segunda Tarea>]>}}, 
-     2: {'id': 2, 'name': 'In Progress', 'description': 'Tareas En Progreso', 'cards': {<QuerySet []>}}, 
-     3: {'id': 3, 'name': 'Done', 'description': 'Tareas Finalzadas', 'cards': {<QuerySet []>}}
-    }
-    """
