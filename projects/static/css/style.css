@@ -20,3 +20,8 @@ body{
 .fr{
     float: right;
 }
+
+.header-column{
+    display: flex;
+    justify-content: space-between;
+}

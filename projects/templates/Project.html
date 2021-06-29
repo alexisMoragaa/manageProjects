@@ -16,7 +16,7 @@
         // Peticion Get para obtener las tareas de cada columna
         axios.get(`/tasks/column/${idColumn}`)
             .then(function(response){
-                addTasks(response, column, col)
+                addTasks(response, column, col, idColumn)
             })
             .catch(function(error){
                 console.log(error)
@@ -25,7 +25,7 @@
     }
 
 
-    function addTasks(response, column, col){
+    function addTasks(response, column, col, idColumn){
        //Esta funcion despliega las tareas correspndientes a cada columna
         var task = ''
         response.data.map(function(x){
@@ -42,11 +42,32 @@
                     `
         })
         
-       
-        document.getElementById(column).innerHTML = task 
+        task += `<button class="btn btn-info btn-sm btn-link fr" onclick="openModal('${idColumn}', '${col}')">
+                    add
+                    <i class="fa fa-plus "></i>
+                </button>`
+        
+        document.getElementById(column).innerHTML = task
     }
 
 
+    function openModal(id, name){
+        $("#addTaskModal").modal()
+        console.log(id, name)
+        // alert("Estas abriendo el modal en la columna "+idColumn);
+    }
+
+
+
+    function addNewTask(event){
+        event.preventDefault();
+        const form = document.querySelector('#addTaskForm')
+        let data = new FormData(form)
+        console.log(data.get("taskName"));
+    
+
+
+    }
 
 
 </script>
@@ -66,8 +87,18 @@
             
             {% for c in column %}
                 <div class="col-md-4" >
-  
-                    <h5>{{ c.name }}</h5>
+                    
+                    <div class="header-column">
+                        
+                        <h5>{{ c.name }}</h5>
+
+                        <button class="btn btn-info btn-sm btn-link" onclick="openModal('{{c.id}}','{{c.name}}')">
+                            add
+                            <i class="fa fa-plus "></i>
+                          </button>
+
+                    </div>
+                    
 
                     <div class="column" id="column-{{c.pk}}"  ondrop="drop(event)" ondragover="allowDrop(event)">
 
@@ -79,7 +110,79 @@
 
         </div>
             
+
+
+        <div class="modal fade" id="addTaskModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-notice">
+                <div class="modal-content">
+                    <div class="modal-header ">
+                        <h5 class="modal-title" id="myModalLabel">Add new task</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body">
+
+                        <form  action="/user" id="addTaskForm" onsubmit="addNewTask(event)">
+
+                           <label for="" class="">Task Name</label>
+                           <input type="text" class="form-control" name="taskName">
+
+                           <label for="" class="mt-3">Task Description</label>
+                           <textarea name="taskDescription" id="" cols="30" rows="3" class="form-control"></textarea>
+                           
+                           <label for="" class="mt-3">Assignee</label>
+                           <input type="text" class="form-control" name="Assignee">
+                           
+                           <div class="modal-footer">
+                               <button type="button" class="btn btn-danger btn-link" data-dismiss="modal">Cancel</button>
+                               <button type="submit" class="btn btn-primary btn-link">Create Task</button>
+                           </div>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
     </div>
+
+
+<style>
+    .modal-header {
+        border-bottom: 0 none !important;
+        display: flex!important;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 20px 0px 20px!important;
+    }   
+
+    .modal-header .modal-title {
+        margin-top: 10px;
+    }
+    .modal-header .close {
+        padding: 1rem 1rem;
+        margin: 0;
+    }
+    .modal-header:before {
+        display: table;
+        content:none!important;
+    }
+    .modal-header:after {
+        display: table;
+        content:none!important;
+    }
+
+    .modal-body{
+        padding: 20px!important;;
+    }
+
+    .modal-footer{
+        flex-wrap: nowrap!important;
+    }
+</style>
 
 
 {% endblock %}
