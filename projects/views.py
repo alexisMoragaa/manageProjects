@@ -2,6 +2,9 @@ from projects.models import Column, Project, Card
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.core.serializers import serialize
+from django.views.generic import CreateView
+import json
+
 # Create your views here.
 def index(request):
     return HttpResponse('este es el index')
@@ -30,4 +33,6 @@ def tasks(request, idColumn):
     return HttpResponse(serialize('json', data), 'application/json')
     
 
+def addTask(request):
+    return HttpResponse(request)
 
